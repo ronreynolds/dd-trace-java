@@ -1,11 +1,10 @@
 package datadog.smoketest
 
 class SpringBootGrpcSpannerTest extends SpringBootWithGRPCTest {
+
   @Override
-  Set<String> expectedTraces() {
-    return [
-      "[servlet.request[spring.handler[SpannerTask.spannerResultSet[grpc.client][grpc.client][grpc.client][grpc.client][http.request][http.request]]]]",
-      "[servlet.request[spring.handler[SpannerTask.spannerResultSet[grpc.client][grpc.client][grpc.client][grpc.client]]]]"].toSet()
+  boolean isAcceptable(String trace) {
+    return (trace.startsWith("[servlet.request[spring.handler[SpannerTask.spannerResultSet[grpc.client]") || trace.startsWith("[grpc.client]") || trace.startsWith("[http.request]"))
   }
 
   @Override

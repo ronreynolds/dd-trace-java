@@ -30,11 +30,10 @@ abstract class SpringBootWithGRPCTest extends AbstractServerSmokeTest {
 
   def verifyLog() {
     BufferedReader reader = new BufferedReader(new FileReader(output))
-    Set<String> expectedTraces = expectedTraces()
     try {
       String line = reader.readLine()
       while (null != line) {
-        assert expectedTraces.contains(line)
+        assert isAcceptable(line)
         line = reader.readLine()
       }
     } finally {
@@ -42,7 +41,7 @@ abstract class SpringBootWithGRPCTest extends AbstractServerSmokeTest {
     }
   }
 
-  abstract Set<String> expectedTraces()
+  abstract boolean isAcceptable(String trace)
 
   abstract String route()
 
